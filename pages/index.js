@@ -52,7 +52,7 @@ function index() {
           </button>
         </form>
         <div className="text-center">
-          <div>New to eKonsulta? Dont have an account?</div>
+          <div>New to eKonsulta? Don't have an account?</div>
           <Link href="/signup">
             <span className="underline">Signup now!</span>
           </Link>
