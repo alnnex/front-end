@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-function index() {
+function Index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -73,4 +73,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
