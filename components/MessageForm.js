@@ -5,15 +5,16 @@ function MessageForm() {
     e.preventDefault();
   }
   return (
-    <div>
-      <form onSubmit={() => handleSubmit()} className="flex p-3 -z-10">
-        <div className="w-[100vw] flex gap-2">
+    <div className="lg:p-5">
+        <div className="h-[80vh] lg:border border-y border-solid border-gray-500 overflow-y-scroll rounded lg:mb-4"></div>
+      <form onSubmit={() => handleSubmit()} className="flex">
+        <div className="w-[100vw] flex  lg:border border-b border-gray-500 rounded">
           <input
             type="text"
             placeholder="Enter message here..."
-            className="w-full p-2 border border-gray-500 rounded-md"
+            className="w-full p-2 "
           />
-          <button className="py-2 px-4 border border-gray-500 rounded-md" type="submit">Send</button>
+          <button className="py-2 px-4 border-gray-500 border-l bg-tertiary" type="submit">Send</button>
         </div>
       </form>
     </div>
