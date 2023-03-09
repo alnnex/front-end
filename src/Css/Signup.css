@@ -1,0 +1,9 @@
+form {
+  height: calc(100vh - 246px);
+  overflow: auto;
+}
+@media only screen and (max-width: 768px) {
+  form {
+    height: auto
+  }
+}
