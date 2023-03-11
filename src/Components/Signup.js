@@ -103,7 +103,7 @@ const Signup = () => {
       const config = {
         headers: {
           "Content-type": "application/json",
-          // "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "*",
         },
       };
       const { data } = await axios.post(
