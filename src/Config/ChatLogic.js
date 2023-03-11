@@ -1,17 +1,17 @@
 import { Avatar, Box, Text } from "@chakra-ui/react";
 
 export const getSenderNameOnly = (loggedUser, users) => {
-  return users[0]._id === loggedUser?._id ? (
+  return users[0]?._id === loggedUser?._id ? (
     <Box>
       <Text>
-        {users[1].firstName} {users[1].lastName}{" "}
+        {users[1]?.firstName} {users[1]?.lastName}{" "}
       </Text>
     </Box>
   ) : (
     <Box>
       {" "}
       <Text>
-        {users[0].firstName} {users[0].lastName}{" "}
+        {users[0]?.firstName} {users[0]?.lastName}{" "}
       </Text>
     </Box>
   );
@@ -41,21 +41,21 @@ export const getSender = (loggedUser, users) => {
       <Avatar
         mr={2}
         size={"sm"}
-        src={users[1].pic}
+        src={users[1]?.pic}
         borderColor="maroon"
         name={
-          JSON.stringify(users[1].firstName).replace(/['"]+/g, "") +
+          JSON.stringify(users[1]?.firstName).replace(/['"]+/g, "") +
           " " +
-          JSON.stringify(users[1].lastName).replace(/['"]+/g, "")
+          JSON.stringify(users[1]?.lastName).replace(/['"]+/g, "")
         }
       />
       <Text
-        textColor={users[1].psychologist ? "maroon" : "black"}
+        textColor={users[1]?.psychologist ? "maroon" : "black"}
         fontWeight="semibold"
         noOfLines={1}
       >
-        {users[1].firstName} {users[1].lastName}{" "}
-        {users[1].psychologist && ", Psy.D"}
+        {users[1]?.firstName} {users[1]?.lastName}{" "}
+        {users[1]?.psychologist && ", Psy.D"}
       </Text>
     </Box>
   ) : (
@@ -63,27 +63,27 @@ export const getSender = (loggedUser, users) => {
       <Avatar
         mr={2}
         size={"sm"}
-        src={users[0].pic}
+        src={users[0]?.pic}
         name={
-          JSON.stringify(users[0].firstName).replace(/['"]+/g, "") +
+          JSON.stringify(users[0]?.firstName).replace(/['"]+/g, "") +
           " " +
-          JSON.stringify(users[0].lastName).replace(/['"]+/g, "")
+          JSON.stringify(users[0]?.lastName).replace(/['"]+/g, "")
         }
       />
       <Text
-        textColor={users[0].psychologist ? "maroon" : "black"}
+        textColor={users[0]?.psychologist ? "maroon" : "black"}
         fontWeight="semibold"
         noOfLines={1}
       >
-        {users[0].firstName} {users[0].lastName}
-        {users[0].psychologist && ", Psy.D"}
+        {users[0]?.firstName} {users[0]?.lastName}
+        {users[0]?.psychologist && ", Psy.D"}
       </Text>
     </Box>
   );
 };
 
 export const getSenderfull = (loggedUser, users) => {
-  return users[0]._id === loggedUser?._id ? users[1] : users[0];
+  return users[0]?._id === loggedUser?._id ? users[1] : users[0];
 };
 
 export const isSameSender = (messages, m, i, userId) => {
