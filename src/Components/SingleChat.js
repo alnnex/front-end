@@ -192,11 +192,11 @@ const SingleChat = () => {
           setNotifications([...notifications, newMessageRecieved]);
           setReFetchChats(!reFetchChats);
           setTrigger(!trigger);
-          sound.play().vol(0.2);
+          // sound.play().vol(0.2);
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
-        sound.play().vol(0.2);
+        // sound.play().vol(0.2);
       }
     });
   });

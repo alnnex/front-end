@@ -9,6 +9,7 @@ const ChatProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [chats, setChats] = useState();
   const navigate = useNavigate();
+  // const [ENDPOINT] = useState("http://localhost:5000");
   const [ENDPOINT] = useState("https://ekonsulta-backend.onrender.com");
   // const storage = window.addEventListener("storage");
 
