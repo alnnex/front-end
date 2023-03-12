@@ -25,7 +25,7 @@ import UserBadgeItem from "../Misc/UserBadgeItem";
 
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, chats, setChats } = ChatState();
+  const { user, chats, setChats, ENDPOINT } = ChatState();
   const toast = useToast();
   const [groupChatName, setGroupChatName] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -88,7 +88,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/chat/group",
+        `${ENDPOINT}/api/chat/group`,
 
         {
           name: groupChatName,
