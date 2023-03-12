@@ -14,14 +14,22 @@ import SideDrawerLoading from "./Misc/SideDrawerLoading";
 import { TriggerState } from "../Context/TriggerProvider";
 import { getSender, getLatestMessage } from "../Config/ChatLogic";
 import GroupChatModal from "../Components/Modals/GroupChatModal";
+import tone from "../audio/tone.mp3";
 
 const MyChats = () => {
   const toast = useToast();
   const { trigger, setTrigger, reFetchChats } = TriggerState();
-  const { user, selectedChat, setSelectedChat, chats, setChats, ENDPOINT } =
-    ChatState();
+  const {
+    user,
+    selectedChat,
+    setSelectedChat,
+    chats,
+    setChats,
+    ENDPOINT,
+  } = ChatState();
 
   const [loggedUser, setLoggedUser] = useState();
+
 
   async function fetchChats() {
     try {

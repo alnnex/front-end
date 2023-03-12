@@ -123,3 +123,85 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
 export const isSameUser = (messages, m, i) => {
   return i > 0 && messages[i - 1]?.sender?.id === m.sender?._id;
 };
+
+export const timeOffset = (time) => {
+  var converted = Number(time.split("T")[1].split(":")[0]);
+  var half;
+  if (converted === 1) {
+    toString((converted = 10));
+    half = "am";
+  } else if (converted === 2) {
+    toString((converted = 11));
+    half = "am";
+  } else if (converted === 3) {
+    toString((converted = 12));
+    half = "am";
+  } else if (converted === 4) {
+    toString((converted = 1));
+    half = "pm";
+  } else if (converted === 5) {
+    toString((converted = 2));
+    half = "pm";
+  } else if (converted === 6) {
+    toString((converted = 3));
+    half = "pm";
+  } else if (converted === 7) {
+    toString((converted = 4));
+    half = "pm";
+  } else if (converted === 8) {
+    toString((converted = 5));
+    half = "pm";
+  } else if (converted === 9) {
+    toString((converted = 6));
+    half = "pm";
+  } else if (converted === 10) {
+    toString((converted = 7));
+    half = "pm";
+  } else if (converted === 11) {
+    toString((converted = 8));
+    half = "pm";
+  } else if (converted === 12) {
+    toString((converted = 9));
+    half = "pm";
+  } else if (converted === 13) {
+    toString((converted = 10));
+    half = "pm";
+  } else if (converted === 14) {
+    toString((converted = 11));
+    half = "pm";
+  } else if (converted === 15) {
+    toString((converted = 12));
+    half = "pm";
+  } else if (converted === 16) {
+    toString((converted = 1));
+    half = "am";
+  } else if (converted === 17) {
+    toString((converted = 2));
+    half = "am";
+  } else if (converted === 18) {
+    toString((converted = 3));
+    half = "am";
+  } else if (converted === 19) {
+    toString((converted = 4));
+    half = "am";
+  } else if (converted === 20) {
+    toString((converted = 5));
+    half = "am";
+  } else if (converted === 21) {
+    toString((converted = 6));
+    half = "am";
+  } else if (converted === 22) {
+    toString((converted = 7));
+    half = "am";
+  } else if (converted === 23) {
+    toString((converted = 8));
+    half = "am";
+  } else {
+    converted = 9;
+    half = "am";
+  }
+
+  return (
+    converted + ":" + time.split("T")[1].split(":")[1] + `${half.toUpperCase()}`
+  );
+};

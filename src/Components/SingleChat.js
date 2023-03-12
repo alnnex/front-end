@@ -22,6 +22,7 @@ import ProfileModal from "./Modals/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import { TriggerState } from "../Context/TriggerProvider";
+import tone from "../audio/tone.mp3";
 
 var socket, selectedChatCompare;
 
@@ -44,6 +45,41 @@ const SingleChat = () => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+
+  const sound = new Audio(tone);
+
+  async function sendMessage(event) {
+    if (event === "Enter" && newMessage) {
+      socket.emit("stop typing", selectedChat._id);
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+
+        setNewMessage("");
+        const { data } = await axios.post(
+          `${ENDPOINT}/api/message`,
+          { content: newMessage, chatId: selectedChat._id },
+          config
+        );
+
+        socket.emit("new message", data);
+        setMessages([...messages, data]);
+      } catch (error) {
+        toast({
+          title: "Something Went Wrong",
+          description: "Failed to send message",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "top-left",
+        });
+      }
+    }
+  }
 
   async function fetchMessages() {
     if (!selectedChat) return;
@@ -76,37 +112,38 @@ const SingleChat = () => {
     }
   }
 
-  async function sendMessage(event) {
-    if (event === "Enter" && newMessage) {
-      socket.emit("stop typing", selectedChat._id);
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
+  // function sound() {}
+  // async function accessNotif(notif) {
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     };
 
-        setNewMessage("");
-        const { data } = await axios.post(
-          `${ENDPOINT}/api/message`,
-          { content: newMessage, chatId: selectedChat._id },
-          config
-        );
-        setMessages([...messages, data]);
-        socket.emit("new message", data);
-      } catch (error) {
-        toast({
-          title: "Something Went Wrong",
-          description: "Failed to send message",
-          status: "error",
-          duration: 2000,
-          isClosable: true,
-          position: "top-left",
-        });
-      }
-    }
-  }
+  //     const { data } = await axios.post(
+  //       `${ENDPOINT}/api/notifications`,
+  //       {
+  //         senderId: notif.sender._id,
+  //         content: notif.content,
+  //         chatId: notif.chat._id,
+  //       },
+  //       config
+  //     );
+  //     setNotifications([...notifications, data]);
+  //     console.log(data);
+  //   } catch (error) {
+  //     toast({
+  //       title: "Something Went Wrong",
+  //       description: "Failed to send message",
+  //       status: "error",
+  //       duration: 2000,
+  //       isClosable: true,
+  //       position: "top-left",
+  //     });
+  //   }
+  // }
 
   function typingHandler(e) {
     setNewMessage(e.target.value);
@@ -151,15 +188,15 @@ const SingleChat = () => {
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
-        console.log("new", newMessageRecieved);
-        console.log("notif", notifications);
         if (!notifications.some((o) => o._id === newMessageRecieved._id)) {
           setNotifications([...notifications, newMessageRecieved]);
           setReFetchChats(!reFetchChats);
           setTrigger(!trigger);
+          sound.play().vol(0.2);
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
+        sound.play().vol(0.2);
       }
     });
   });

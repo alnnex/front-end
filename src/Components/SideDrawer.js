@@ -136,6 +136,8 @@ const SideDrawer = () => {
     }
   }
 
+
+
   const combinedName =
     JSON.stringify(user.firstName).replace(/['"]+/g, "") +
     " " +
