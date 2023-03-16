@@ -219,15 +219,15 @@ const SingleChat = () => {
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
         if (!notifications.some((o) => o._id === newMessageRecieved._id)) {
-          playSound();
           setNotifications([...notifications, newMessageRecieved]);
           setReFetchChats(!reFetchChats);
           setTrigger(!trigger);
+          playSound();
         }
       } else {
-        playSound();
         setMessages([...messages, newMessageRecieved]);
         setTrigger(!trigger);
+        playSound();
       }
     });
   });
