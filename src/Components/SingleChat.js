@@ -46,7 +46,31 @@ const SingleChat = () => {
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
-  const sound = new Audio(tone);
+  function playSound() {
+    const sound = new Audio(tone);
+
+    sound.volume(0.2).play();
+  }
+
+  async function notifPush(message) {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `${ENDPOINT}/api/notifications`,
+        {
+          senderId: message.sender._id,
+          content: message.content,
+          chatId: message.chat._id,
+        },
+        config
+      );
+    } catch (error) {}
+  }
 
   async function sendMessage(event) {
     if (event === "Enter" && newMessage) {
@@ -65,9 +89,11 @@ const SingleChat = () => {
           { content: newMessage, chatId: selectedChat._id },
           config
         );
-
         socket.emit("new message", data);
         setMessages([...messages, data]);
+        console.log(data);
+
+        notifPush(data);
       } catch (error) {
         toast({
           title: "Something Went Wrong",
@@ -182,6 +208,7 @@ const SingleChat = () => {
     socket.on("stop typing", () => setIsTyping(false));
   }, []);
 
+
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
@@ -192,11 +219,11 @@ const SingleChat = () => {
           setNotifications([...notifications, newMessageRecieved]);
           setReFetchChats(!reFetchChats);
           setTrigger(!trigger);
-          // sound.play().vol(0.2);
+          // playSound();
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
-        // sound.play().vol(0.2);
+        // playSound();
       }
     });
   });

@@ -279,12 +279,12 @@ const EditGroupChatModal = ({ children, groupChat }) => {
               <Avatar
                 src={groupChat.groupAdmin.pic}
                 name={
-                  JSON.stringify(groupChat.groupAdmin.firstName).replace(
+                  JSON.stringify(groupChat.groupAdmin.firstName)?.replace(
                     /['"]+/g,
                     ""
                   ) +
                   " " +
-                  JSON.stringify(groupChat.groupAdmin.lastName).replace(
+                  JSON.stringify(groupChat.groupAdmin.lastName)?.replace(
                     /['"]+/g,
                     ""
                   )

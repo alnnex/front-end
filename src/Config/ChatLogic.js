@@ -32,9 +32,9 @@ export const getLatestMessage = (message) => {
 };
 export const getSender = (loggedUser, users) => {
   //   const combinedName =
-  //     JSON.stringify(user.firstName).replace(/['"]+/g, "") +
+  //     JSON.stringify(user.firstName)?.replace(/['"]+/g, "") +
   //     " " +
-  //     JSON.stringify(user.lastName).replace(/['"]+/g, "");
+  //     JSON.stringify(user.lastName)?.replace(/['"]+/g, "");
 
   return users[0]?._id === loggedUser?._id ? (
     <Box display={"flex"} alignItems={"center"}>
@@ -44,9 +44,9 @@ export const getSender = (loggedUser, users) => {
         src={users[1]?.pic}
         borderColor="maroon"
         name={
-          JSON.stringify(users[1]?.firstName).replace(/['"]+/g, "") +
+          JSON.stringify(users[1]?.firstName)?.replace(/['"]+/g, "") +
           " " +
-          JSON.stringify(users[1]?.lastName).replace(/['"]+/g, "")
+          JSON.stringify(users[1]?.lastName)?.replace(/['"]+/g, "")
         }
       />
       <Text
@@ -65,9 +65,9 @@ export const getSender = (loggedUser, users) => {
         size={"sm"}
         src={users[0]?.pic}
         name={
-          JSON.stringify(users[0]?.firstName).replace(/['"]+/g, "") +
+          JSON.stringify(users[0]?.firstName)?.replace(/['"]+/g, "") +
           " " +
-          JSON.stringify(users[0]?.lastName).replace(/['"]+/g, "")
+          JSON.stringify(users[0]?.lastName)?.replace(/['"]+/g, "")
         }
       />
       <Text

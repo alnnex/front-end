@@ -74,6 +74,28 @@ const SideDrawer = () => {
     handleSearch();
   }, [search, localTrigger]);
 
+  useEffect(() => {
+    fetchNotifications();
+  }, [localTrigger]);
+  async function fetchNotifications() {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `${ENDPOINT}/api/notifications/fetchNotif`,
+        {
+          userId: user._id,
+        },
+        config
+      );
+      console.log("notif fetched", data);
+      setNotifications(data);
+    } catch (error) {}
+  }
+
   async function handleSearch() {
     try {
       setLoading(true);
@@ -135,9 +157,34 @@ const SideDrawer = () => {
       });
     }
   }
+  async function deleteNotif(notifId) {
+    try {
+      setLoadingChat(true);
 
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
 
-
+      const { data } = await axios.put(
+        `${ENDPOINT}/api/notifications/deleteNotif`,
+        { notifId },
+        config
+      );
+      setLocalTrigger(!localTrigger);
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: "Notification Deletion Failed! ",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top-left",
+      });
+    }
+  }
   const combinedName =
     JSON.stringify(user.firstName).replace(/['"]+/g, "") +
     " " +
@@ -192,20 +239,25 @@ const SideDrawer = () => {
             </MenuButton>
             <MenuList px={2}>
               {!notifications.length && "No New Messages"}
-              {notifications.map((notif) => (
-                <MenuItem
-                  key={notif._id}
-                  onClick={() => {
-                    setSelectedChat(notif.chat);
-                    setNotifications(notifications.filter((n) => n !== notif));
-                  }}
-                >
-                  {" "}
-                  {notif.chat.isGroupChat
-                    ? `New Message in ${notif.chat.chatName}`
-                    : `New Message from ${notif.sender.firstName} ${notif.sender.lastName}`}
-                </MenuItem>
-              ))}
+              {notifications
+                .filter((notifs) => notifs.sender._id !== user._id)
+                .map((filteredNotifs) => (
+                  <MenuItem
+                    key={filteredNotifs._id}
+                    onClick={() => {
+                      setSelectedChat(filteredNotifs.chat);
+                      setNotifications(
+                        notifications.filter((n) => n !== filteredNotifs)
+                      );
+                      deleteNotif(filteredNotifs._id);
+                    }}
+                  >
+                    {" "}
+                    {filteredNotifs.chat?.isGroupChat
+                      ? `New Message in ${filteredNotifs?.chat.chatName}`
+                      : `New Message from ${filteredNotifs?.sender?.firstName} ${filteredNotifs?.sender?.lastName}`}
+                  </MenuItem>
+                ))}
             </MenuList>
           </Menu>
           <Menu>

@@ -33,9 +33,9 @@ const ProfileModal = ({ children, user }) => {
                 h="40"
                 src={user.pic}
                 name={
-                  JSON.stringify(user.firstName).replace(/['"]+/g, "") +
+                  JSON.stringify(user.firstName)?.replace(/['"]+/g, "") +
                   " " +
-                  JSON.stringify(user.lastName).replace(/['"]+/g, "")
+                  JSON.stringify(user.lastName)?.replace(/['"]+/g, "")
                 }
               />
               <Text fontSize="3xl">
