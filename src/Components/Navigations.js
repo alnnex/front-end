@@ -7,7 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import { PathFinder } from "./Misc/PathFinder";
 
@@ -21,6 +21,13 @@ const Navigations = () => {
     localStorage.clear();
     navigate("/auth");
   }
+
+  useEffect(() => {
+    if (path === "/auth") {
+      navigate("/chats");
+    }
+  }, [location]);
+
   return (
     <Box w="100%" bgColor={"white"}>
       <Container maxW="8xl" justifyContent="space-between" display="flex">

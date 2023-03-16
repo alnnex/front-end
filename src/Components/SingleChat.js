@@ -46,10 +46,12 @@ const SingleChat = () => {
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
+  const volume = 0.1;
+
   function playSound() {
     const sound = new Audio(tone);
-
-    sound.volume(0.2).play();
+    sound.volume = volume;
+    sound.play();
   }
 
   async function notifPush(message) {
@@ -69,6 +71,8 @@ const SingleChat = () => {
         },
         config
       );
+
+      setTrigger(!trigger);
     } catch (error) {}
   }
 
@@ -208,7 +212,6 @@ const SingleChat = () => {
     socket.on("stop typing", () => setIsTyping(false));
   }, []);
 
-
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
@@ -216,14 +219,15 @@ const SingleChat = () => {
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
         if (!notifications.some((o) => o._id === newMessageRecieved._id)) {
+          playSound();
           setNotifications([...notifications, newMessageRecieved]);
           setReFetchChats(!reFetchChats);
           setTrigger(!trigger);
-          // playSound();
         }
       } else {
+        playSound();
         setMessages([...messages, newMessageRecieved]);
-        // playSound();
+        setTrigger(!trigger);
       }
     });
   });

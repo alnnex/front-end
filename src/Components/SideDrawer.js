@@ -44,17 +44,20 @@ import axios from "axios";
 import UserList from "./UserList";
 import SideDrawerLoading from "./Misc/SideDrawerLoading";
 import { getSender, getSenderNameOnly } from "../Config/ChatLogic";
+import { TriggerState } from "../Context/TriggerProvider";
 
 const SideDrawer = () => {
   const {
     user,
     setSelectedChat,
+    selectedChat,
     chats,
     setChats,
     notifications,
     setNotifications,
     ENDPOINT,
   } = ChatState();
+  const { trigger } = TriggerState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -76,7 +79,17 @@ const SideDrawer = () => {
 
   useEffect(() => {
     fetchNotifications();
-  }, [localTrigger]);
+  }, [localTrigger, trigger]);
+
+  useEffect(() => {
+    notifications?.map((notif) => {
+      if (notif?.chat?._id === selectedChat?._id) {
+        console.log("to delete", notif);
+        deleteNotif(notif?._id);
+      }
+    });
+  }, [notifications, selectedChat, trigger]);
+
   async function fetchNotifications() {
     try {
       const config = {
@@ -168,7 +181,7 @@ const SideDrawer = () => {
         },
       };
 
-      const { data } = await axios.put(
+      await axios.put(
         `${ENDPOINT}/api/notifications/deleteNotif`,
         { notifId },
         config
