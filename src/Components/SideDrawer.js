@@ -251,18 +251,18 @@ const SideDrawer = () => {
               <i className="fa-sharp fa-solid fa-bell"></i>
             </MenuButton>
             <MenuList px={2}>
-              {!notifications.length && "No New Messages"}
+              {!notifications?.length && "No New Messages"}
               {notifications
-                .filter((notifs) => notifs.sender._id !== user._id)
+                .filter((notifs) => notifs?.sender?._id !== user?._id)
                 .map((filteredNotifs) => (
                   <MenuItem
-                    key={filteredNotifs._id}
+                    key={filteredNotifs?._id}
                     onClick={() => {
-                      setSelectedChat(filteredNotifs.chat);
+                      setSelectedChat(filteredNotifs?.chat);
                       setNotifications(
                         notifications.filter((n) => n !== filteredNotifs)
                       );
-                      deleteNotif(filteredNotifs._id);
+                      deleteNotif(filteredNotifs?._id);
                     }}
                   >
                     {" "}
