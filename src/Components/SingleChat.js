@@ -213,6 +213,10 @@ const SingleChat = () => {
   }, []);
 
   useEffect(() => {
+    playSound();
+  }, [notifications, messages]);
+
+  useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
         !selectedChatCompare ||
@@ -222,12 +226,10 @@ const SingleChat = () => {
           setNotifications([...notifications, newMessageRecieved]);
           setReFetchChats(!reFetchChats);
           setTrigger(!trigger);
-          playSound();
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
         setTrigger(!trigger);
-        playSound();
       }
     });
   });
