@@ -31,7 +31,7 @@ const UserList = ({ user, handleFunction }) => {
       />
       <Text
         textColor={user.psychologist ? "maroon" : "black"}
-        fontWeight={user.psychologist ? "semibold" : "normal"}
+        // fontWeight={user.psychologist ? "semibold" : "normal"}
       >
         {user.firstName} {user.lastName} {user.psychologist && ", Psy.D"}
       </Text>

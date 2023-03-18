@@ -51,7 +51,7 @@ export const getSender = (loggedUser, users) => {
       />
       <Text
         textColor={users[1]?.psychologist ? "maroon" : "black"}
-        //fontweight="semibold"
+        // fontweight="semibold"
         noOfLines={1}
       >
         {users[1]?.firstName} {users[1]?.lastName}{" "}
